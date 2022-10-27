@@ -11,6 +11,7 @@ export async function infinite_scroll() {
     apiURL,
     Component;
 
+  // Variable para esperar a que se termine una petición antes de enviar otra.
   let requestPending = false;
 
   w.addEventListener("scroll", async (e) => {
@@ -31,7 +32,7 @@ export async function infinite_scroll() {
 
       d.querySelector(".loader").style.display = "block";
 
-      if (requestPending) return alert("enviando");
+      if (requestPending) return;
       requestPending = true;
 
       await ajax({
