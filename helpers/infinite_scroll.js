@@ -11,6 +11,8 @@ export async function infinite_scroll() {
     apiURL,
     Component;
 
+  let requestPending = false;
+
   w.addEventListener("scroll", async (e) => {
     let { scrollTop, clientHeight, scrollHeight } = d.documentElement,
       { hash } = w.location;
@@ -29,13 +31,16 @@ export async function infinite_scroll() {
 
       d.querySelector(".loader").style.display = "block";
 
+      if (requestPending) return;
+      requestPending = true;
+
       await ajax({
         url: apiURL,
         cbSuccess: (posts) => {
           let html = "";
-
           posts.forEach((post) => (html += Component(post)));
           d.getElementById("main").insertAdjacentHTML("beforeend", html);
+          requestPending = false;
 
           d.querySelector(".loader").style.display = "none";
         },
