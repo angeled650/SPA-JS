@@ -31,7 +31,7 @@ export async function infinite_scroll() {
 
       d.querySelector(".loader").style.display = "block";
 
-      if (requestPending) return;
+      if (requestPending) return alert("enviando");
       requestPending = true;
 
       await ajax({
